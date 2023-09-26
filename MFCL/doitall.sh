@@ -1,13 +1,15 @@
 #!/bin/sh
 
-#  -----------------------------------
-#   PHASE 0 - create initial par file
-#  -----------------------------------
+# -----------------------------------
+#  PHASE 0 - create initial par file
+# -----------------------------------
+
 mfclo64 yft.frq yft.ini 00.par -makepar
 
-#  -----------------------
-#   PHASE 1 - initial par
-#  -----------------------
+# -----------------------
+#  PHASE 1 - initial par
+# -----------------------
+
 mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
 # Use default quasi-Newton minimizer
   1 351 0
@@ -258,34 +260,38 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   1 34 0    # set to 1 34 1 to run with old variance, as in MFCL 2.1.1.0 and earlier
 PHASE1
 
-#  ---------
-#   PHASE 2
-#  ---------
+# ---------
+#  PHASE 2
+# ---------
+
 mfclo64 yft.frq 01.par 02.par -file - <<PHASE2
  1 1 1000  # set max. number of function evaluations per phase to 1000
  2 113 0   # turn off useless parameter rec_init_diff
 PHASE2
 
-#  ---------
-#   PHASE 3
-#  ---------
+# ---------
+#  PHASE 3
+# ---------
+
 mfclo64 yft.frq 02.par 03.par -file - <<PHASE3
  2  70 1  # activate time series of reg recruitment parameters
  2  71 1  # estimate temporal changes in recruitment distribution
  2 178 1  # constrain regional recruitments
 PHASE3
 
-#  ---------
-#   PHASE 4
-#  ---------
+# ---------
+#  PHASE 4
+# ---------
+
 mfclo64 yft.frq 03.par 04.par -file - <<PHASE4
  2 68  1  # estimate movement coefficients
  2 27 -1  # penalty wt 0.1 computed against prior
 PHASE4
 
-#  ---------
-#   PHASE 5
-#  ---------
+# ---------
+#  PHASE 5
+# ---------
+
 mfclo64 yft.frq 04.par 05.par -file - <<PHASE5
   -100000 1 1  # estimate
   -100000 2 1  # time-invariant
@@ -297,6 +303,7 @@ PHASE5
 # ---------
 #  PHASE 6
 # ---------
+
 mfclo64 yft.frq 05.par 06.par -file - <<PHASE6
  1 240 1  # activate model fit to observed age-length data
  1  12 0  # do not estimate mean length of age 1
@@ -304,26 +311,29 @@ mfclo64 yft.frq 05.par 06.par -file - <<PHASE6
  1  14 0  # do not estimate von Bertalanffy K
 PHASE6
 
-#  ---------
-#   PHASE 7
-#  ---------
+# ---------
+#  PHASE 7
+# ---------
+
 mfclo64 yft.frq 06.par 07.par -file - <<PHASE7
   1 15 1  # estimate overall SD
   1 16 1  # estimate length dependent SD
 PHASE7
 
-#  ---------
-#   PHASE 8
-#  ---------
+# ---------
+#  PHASE 8
+# ---------
+
 mfclo64 yft.frq 07.par 08.par -file - <<PHASE8
  1 173 0  # estimate independent mean lengths for 1st 0 age classes
  1 182 0
  1 184 0
 PHASE8
 
-#  ---------
-#   PHASE 9
-#  ---------
+# ---------
+#  PHASE 9
+# ---------
+
 mfclo64 yft.frq 08.par 09.par -file - <<PHASE9
   2 145 1    # penalty on stock-recruit pars
   1 149 0    # penalty for recruitment devs
@@ -350,9 +360,10 @@ mfclo64 yft.frq 08.par 09.par -file - <<PHASE9
   1 1 500  # extra evals
 PHASE9
 
-#  ---------
-#   PHASE 10
-#  ---------
+# ----------
+#  PHASE 10
+# ----------
+
 mfclo64 yft.frq 09.par 10.par -file - <<PHASE10
   2 145 -1   # use SRR parameters - low penalty for deviation
   1 1 10000
@@ -360,9 +371,10 @@ mfclo64 yft.frq 09.par 10.par -file - <<PHASE10
   2 116 300  # increase Z bound for NR computations to 3.0
 PHASE10
 
-#  ---------
-#   PHASE 11
-#  ---------
+# ----------
+#  PHASE 11
+# ----------
+
 mfclo64 yft.frq 10.par 11.par -file - <<PHASE11
   1 13 1     # estimate mean length of largest age class
   1 14 1     # estimate von Bertalanffy K
