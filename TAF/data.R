@@ -1,7 +1,7 @@
 ## Preprocess data, write TAF data tables
 
 ## Before: yft.age_length, yft.frq, yft.tag (boot/data),
-##         length.fit (boot/length_fit)
+##         length.fit (boot/model_results)
 ## After:  cpue.csv, length_comps.csv, otoliths.csv, weight_comps.csv (data)
 
 library(TAF)
@@ -12,9 +12,12 @@ library(tools)  # toTitleCase
 mkdir("data")
 
 # Read MFCL data
+cat("Processing otolith data ... ")
 oto <- suppressWarnings(read.MFCLALK("boot/data/yft.age_length",
-                                     "boot/data/length_fit/length.fit"))
+                                     "boot/data/model_results/length.fit"))
+cat("done\nProcessing catch data ... ")
 frq <- read.MFCLFrq("boot/data/yft.frq")
+cat("done\n")
 
 # Format otolith data
 otoliths <- ALK(oto)
