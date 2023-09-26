@@ -2,11 +2,12 @@
 
 ## Before: yft.age_length, yft.frq, yft.tag (boot/data),
 ##         length.fit (boot/length_fit)
-## After:
+## After:  cpue.csv, length_comps.csv, otoliths.csv, weight_comps.csv (data)
 
 library(TAF)
 taf.library(FLCore)
 taf.library(FLR4MFCL)
+library(tools)  # toTitleCase
 
 mkdir("data")
 
@@ -16,15 +17,37 @@ oto <- suppressWarnings(read.MFCLALK("boot/data/yft.age_length",
 frq <- read.MFCLFrq("boot/data/yft.frq")
 
 # Format otolith data
-oto <- ALK(oto)
-oto <- oto[oto$obs > 0,]
-oto <- oto[rep(seq_len(nrow(oto)), oto$obs),]
-oto$obs <- oto$species <- NULL
-rownames(oto) <- NULL
+otoliths <- ALK(oto)
+otoliths <- otoliths[otoliths$obs > 0,]
+otoliths <- otoliths[rep(seq_len(nrow(otoliths)), otoliths$obs),]
+otoliths$obs <- otoliths$species <- NULL
+otoliths$month <- otoliths$fishery <- NULL
+rownames(otoliths) <- NULL
+names(otoliths) <- toTitleCase(names(otoliths))
 
 # Format CPUE data
 cpue <- realisations(frq)
-cpue <- cpue[cpue$effort > 0,]
-cpue$week <- cpue$penalty <- NULL
+cpue <- cpue[cpue$fishery %in% 33:37,]  # index fisheries
+cpue$index <- cpue$catch / cpue$effort / 1e6
+cpue$region <- cpue$fishery - 32
+cpue$fishery <- cpue$catch <- cpue$effort <- cpue$week <- cpue$penalty <- NULL
+cpue <- cpue[c("year", "month", "region", "index")]
 rownames(cpue) <- NULL
-cpue$index <- cpue$catch / cpue$effort
+names(cpue) <- toTitleCase(names(cpue))
+
+# Format size data
+size <- freq(frq)
+size$week <- size$penalty <- size$catch <- size$effort <- NULL
+size <- size[size$freq != -1,]
+length.comps <- size[!is.na(size$length),]
+weight.comps <- size[!is.na(size$weight),]
+length.comps$weight <- weight.comps$length <- NULL
+row.names(length.comps) <- row.names(weight.comps) <- NULL
+names(length.comps) <- toTitleCase(names(length.comps))
+names(weight.comps) <- toTitleCase(names(weight.comps))
+
+# Write TAF tables
+write.taf(otoliths, dir="data")
+write.taf(cpue, dir="data")
+write.taf(length.comps, dir="data")
+write.taf(weight.comps, dir="data")
