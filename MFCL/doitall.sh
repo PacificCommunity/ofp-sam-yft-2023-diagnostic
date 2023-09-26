@@ -16,7 +16,6 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   1 192 0
 # Allow all growth parameters to be fixed during control phase
   1 32 7
-#
 # Catch conditioned flags
 # General activation
   1 373 1  # activate CC with Baranov equation
@@ -32,7 +31,6 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -999 10 0
   -999 15 0
   -999 13 0
-#
 # Survey fisheries defined
 # CPUE variation  Index wt   Time varying CV
   -33 94 1        -33 92 61  -33 66 0
@@ -78,7 +76,6 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -35 99 33
   -36 99 33
   -37 99 33
-#
 # Recruitment and initial population settings
   1 149 100        # recruitment deviation penalty
   1 400 6          # final six recruitment deviates set to zero
@@ -89,10 +86,8 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   2 93 4           # set no. of recruitments per year to 4
   2 57 4           # set no. of recruitments per year to 4
   2 94 1 2 128 10  # initial Z = 1.0*M, i.e. initial F = 0
-#
 # Movement
   2 69 1
-#
 # Likelihood component settings
   1 111 4     # set likelihood function for tags to negative binomial
   1 141 3     # set likelihood function for LF data to normal
@@ -115,7 +110,6 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -35 49 40  -35 50 40
   -36 49 40  -36 50 40
   -37 49 40  -37 50 40
-#
 # Tag dynamics settings
   1 33 99    # maximum tag reporting rate for all fisheries is 0.99
   2 96 12    # pool tags after 12 quarters at liberty
@@ -161,7 +155,6 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -35 32 26
   -36 32 26
   -37 32 26
-#
 # Selectivity settings
   -999 3 37  # all selectivities equal for age class 37 and older
   -999 26 2  # set length-dependent selectivity option
@@ -348,7 +341,6 @@ mfclo64 yft.frq 08.par 09.par -file - <<PHASE9
   2 200 4    # end time for yield calculation/SRR estimation
   2 171 1    # include SRR-based equilibrium recruitment to compute unfished biomass
   2 116 200  # increase Z bound for NR computations to 2.0
-#
 # Output flags
   1 190 1  # write plot.rep
   1 186 1  # write fishmort and plotq0.rep
