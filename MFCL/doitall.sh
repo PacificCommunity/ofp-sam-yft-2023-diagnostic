@@ -199,7 +199,7 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -28 24 26
   -32 24 27
   -24 24 28
-  -33 24 29 # Index fisheries
+  -33 24 29  # Index fisheries
   -34 24 29
   -35 24 29
   -36 24 29
