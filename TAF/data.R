@@ -6,55 +6,57 @@
 ##         weight_comps.csv (data)
 
 library(TAF)
-taf.library(FLCore)
 taf.library(FLR4MFCL)
-library(tools)  # toTitleCase
+source("utilities.R")  # reading
 
 mkdir("data")
 
 # Read data
-cat("Processing otolith data ... ")
-oto <- suppressWarnings(read.MFCLALK("boot/data/yft.age_length",
-                                     "boot/data/model_results/length.fit"))
-cat("done\nProcessing catch data ... ")
-frq <- read.MFCLFrq("boot/data/yft.frq")
-cat("done\nProcessing fisheries description ...")
-fisheries <- read.table("boot/data/fdesc.txt", fill=TRUE, header=TRUE)
-cat("done\n")
+oto <- reading("otolith data",
+               read.MFCLALK("boot/data/yft.age_length",
+                            "boot/data/model_results/length.fit"))
+frq <- reading("catch data", read.MFCLFrq("boot/data/yft.frq"))
+fisheries <- reading("fisheries description",
+                     read.table("boot/data/fdesc.txt", fill=TRUE, header=TRUE))
 
-# Format fisheries description
-names(fisheries) <- toTitleCase(names(fisheries))
+# Fisheries description
+names(fisheries)[names(fisheries) == "region"] <- "area"
 
-# Format otolith data
+# Otolith data
 otoliths <- ALK(oto)
 otoliths <- otoliths[otoliths$obs > 0,]
 otoliths <- otoliths[rep(seq_len(nrow(otoliths)), otoliths$obs),]
-otoliths$obs <- otoliths$species <- NULL
-otoliths$region <- fisheries$Region[otoliths$fishery]
-otoliths <- otoliths[c("year", "month", "region", "age", "length")]
+otoliths$season <- (1 + otoliths$month) / 3
+otoliths$area <- fisheries$area[otoliths$fishery]
+otoliths <- otoliths[c("year", "season", "area", "age", "length")]
 rownames(otoliths) <- NULL
-names(otoliths) <- toTitleCase(names(otoliths))
 
-# Format CPUE data
+# CPUE data
 cpue <- realisations(frq)
 cpue <- cpue[cpue$fishery %in% 33:37,]  # index fisheries
+cpue$season <- (1 + cpue$month) / 3
+cpue$area <- cpue$fishery - 32
 cpue$index <- cpue$catch / cpue$effort / 1e6
-cpue$region <- cpue$fishery - 32
-cpue$fishery <- cpue$catch <- cpue$effort <- cpue$week <- cpue$penalty <- NULL
-cpue <- cpue[c("year", "month", "region", "index")]
+cpue <- cpue[c("year", "season", "area", "index")]
 rownames(cpue) <- NULL
-names(cpue) <- toTitleCase(names(cpue))
 
-# Format size data
+# Size data
 size <- freq(frq)
-size$week <- size$penalty <- size$catch <- size$effort <- NULL
 size <- size[size$freq != -1,]
+
+# Length compositions
 length.comps <- size[!is.na(size$length),]
+length.comps$season <- (1 + length.comps$month) / 3
+length.comps$area <- fisheries$area[length.comps$fishery]
+length.comps <- length.comps[c("year", "season", "fishery", "area", "length", "freq")]
+row.names(length.comps) <- NULL
+
+# Weight compositions
 weight.comps <- size[!is.na(size$weight),]
-length.comps$weight <- weight.comps$length <- NULL
-row.names(length.comps) <- row.names(weight.comps) <- NULL
-names(length.comps) <- toTitleCase(names(length.comps))
-names(weight.comps) <- toTitleCase(names(weight.comps))
+weight.comps$season <- (1 + weight.comps$month) / 3
+weight.comps$area <- fisheries$area[weight.comps$fishery]
+weight.comps <- weight.comps[c("year", "season", "fishery", "area", "weight", "freq")]
+row.names(weight.comps) <- NULL
 
 # Write TAF tables
 write.taf(fisheries, dir="data")
