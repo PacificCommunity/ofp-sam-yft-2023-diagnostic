@@ -8,10 +8,10 @@ library(TAF)
 
 mkdir("model")
 
-# Fetch software
+# Software
 cp("boot/software/mfclo64", "model")
 
-# Fetch input files
+# Input files
 cp("boot/data/doitall.sh",     "model")
 cp("boot/data/mfcl.cfg",       "model")
 cp("boot/data/yft.age_length", "model")
