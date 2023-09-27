@@ -18,7 +18,7 @@ rep <- read.MFCLRep(finalRep("model"))
 cat("done\nReading parameters ... ")
 par <- read.MFCLPar(finalPar("model"), first.yr=range(rep)[["minyear"]])
 cat("done\nReading catches ...\n")
-catch <- read.MFCLCatch("model/catch.rep", dimensions(par), range(par))
+catches <- read.MFCLCatch("model/catch.rep", dimensions(par), range(par))
 cat("done\nReading length fits ... ")
 lenfit <- read.MFCLLenFit("model/length.fit")
 cat("done\nReading likelihoods ... ")
@@ -37,11 +37,15 @@ likelihoods$penalties <- obj_fun(par) - sum(likelihoods)
 names(likelihoods) <- toTitleCase(names(likelihoods))
 
 # Calculate model stats
-objfun <- obj_fun(par)
 npar <- n_pars(par)
+objfun <- obj_fun(par)
 gradient <- max_grad(par)
 start <- format(file.mtime("model/00.par"))
 hours <- file.mtime(finalPar("model")) - file.mtime("model/00.par")
 hours <- hours[[1]]
-stats <- list(objfun=objfun, npar=npar, gradient=gradient, start=start,
+stats <- list(npar=npar, objfun=objfun, gradient=gradient, start=start,
               hours=hours)
+
+# Calculate catches
+catch <- as.data.frame(total_catch(catches))
+catch$age <- catch$unit <- catch$area <- catch$iter <- NULL
