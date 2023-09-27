@@ -1,8 +1,9 @@
 ## Preprocess data, write TAF data tables
 
-## Before: yft.age_length, yft.frq, yft.tag (boot/data),
+## Before: fdesc.txt, yft.age_length, yft.frq, yft.tag (boot/data),
 ##         length.fit (boot/model_results)
-## After:  cpue.csv, length_comps.csv, otoliths.csv, weight_comps.csv (data)
+## After:  cpue.csv, fisheries.csv, length_comps.csv, otoliths.csv,
+##         weight_comps.csv (data)
 
 library(TAF)
 taf.library(FLCore)
@@ -11,20 +12,26 @@ library(tools)  # toTitleCase
 
 mkdir("data")
 
-# Read MFCL data
+# Read data
 cat("Processing otolith data ... ")
 oto <- suppressWarnings(read.MFCLALK("boot/data/yft.age_length",
                                      "boot/data/model_results/length.fit"))
 cat("done\nProcessing catch data ... ")
 frq <- read.MFCLFrq("boot/data/yft.frq")
+cat("done\nProcessing fisheries description ...")
+fisheries <- read.table("boot/data/fdesc.txt", fill=TRUE, header=TRUE)
 cat("done\n")
+
+# Format fisheries description
+names(fisheries) <- toTitleCase(names(fisheries))
 
 # Format otolith data
 otoliths <- ALK(oto)
 otoliths <- otoliths[otoliths$obs > 0,]
 otoliths <- otoliths[rep(seq_len(nrow(otoliths)), otoliths$obs),]
 otoliths$obs <- otoliths$species <- NULL
-otoliths$month <- otoliths$fishery <- NULL
+otoliths$region <- fisheries$Region[otoliths$fishery]
+otoliths <- otoliths[c("year", "month", "region", "age", "length")]
 rownames(otoliths) <- NULL
 names(otoliths) <- toTitleCase(names(otoliths))
 
@@ -50,6 +57,7 @@ names(length.comps) <- toTitleCase(names(length.comps))
 names(weight.comps) <- toTitleCase(names(weight.comps))
 
 # Write TAF tables
+write.taf(fisheries, dir="data")
 write.taf(otoliths, dir="data")
 write.taf(cpue, dir="data")
 write.taf(length.comps, dir="data")
