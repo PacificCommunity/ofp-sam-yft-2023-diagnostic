@@ -5,7 +5,6 @@
 ## After:
 
 library(TAF)
-taf.library(FLCore)
 taf.library(FLR4MFCL)
 
 mkdir("report")
