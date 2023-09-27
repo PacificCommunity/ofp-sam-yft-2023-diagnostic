@@ -1,51 +1,78 @@
 ## Extract results of interest, write TAF output tables
 
 ## Before: 11.par, catch.rep, length.fit, plot-11.par.rep, test_plot_output,
-##         weight.fit (model)
-## After:  11.par, catch.rep, length.fit, plot-11.par.rep, test_plot_output,
-##         weight.fit (output)
+##         weight.fit (model), fisheries.csv (data)
+## After:
 
 library(TAF)
-taf.library(FLCore)
 taf.library(FLR4MFCL)
-library(tools)  # toTitleCase
+source("utilities.R")  # reading
 
 mkdir("output")
 
-# Read model output
-cat("Reading model estimates ... ")
-rep <- read.MFCLRep(finalRep("model"))
-cat("done\nReading parameters ... ")
-par <- read.MFCLPar(finalPar("model"), first.yr=range(rep)[["minyear"]])
-cat("done\nReading catches ...\n")
-catches <- read.MFCLCatch("model/catch.rep", dimensions(par), range(par))
-cat("done\nReading length fits ... ")
-lenfit <- read.MFCLLenFit("model/length.fit")
-cat("done\nReading likelihoods ... ")
-like <- read.MFCLLikelihood("model/test_plot_output")
-cat("done\nReading weight fits ... ")
-wgtfit <- read.MFCLWgtFit("model/weight.fit")
-cat("done\n")
+# Read MFCL output files
+rep <- reading("model estimates", read.MFCLRep(finalRep("model")))
+par <- reading("parameters", read.MFCLPar(finalPar("model"),
+                                          first.yr=range(rep)[["minyear"]]))
+catches <- reading("catches", read.MFCLCatch("model/catch.rep",
+                                             dimensions(par), range(par)))
+lenfit <- reading("length fits", read.MFCLLenFit("model/length.fit"))
+like <- reading("likelihoods", read.MFCLLikelihood("model/test_plot_output"))
+wgtfit <- reading("weight fits", read.MFCLWgtFit("model/weight.fit"))
 
-# Calculate likelihoods and npar
+# Read fisheries description
+fisheries <- read.taf("data/fisheries.csv")
+
+# Likelihoods
 likelihoods <- summary(like)
 likelihoods <- as.data.frame(as.list(likelihoods$likelihood))
 names(likelihoods) <- summary(like)$component
 likelihoods$bhsteep <- likelihoods$effort_dev <- NULL
 likelihoods$catchability_dev <- likelihoods$total <- NULL
 likelihoods$penalties <- obj_fun(par) - sum(likelihoods)
-names(likelihoods) <- toTitleCase(names(likelihoods))
 
-# Calculate model stats
+# Model stats
 npar <- n_pars(par)
 objfun <- obj_fun(par)
 gradient <- max_grad(par)
-start <- format(file.mtime("model/00.par"))
+start <- file.mtime("model/00.par")
 hours <- file.mtime(finalPar("model")) - file.mtime("model/00.par")
 hours <- hours[[1]]
-stats <- list(npar=npar, objfun=objfun, gradient=gradient, start=start,
-              hours=hours)
+stats <- data.frame(npar, objfun, gradient, start, hours)
 
-# Calculate catches
-catch <- as.data.frame(total_catch(catches))
-catch$age <- catch$unit <- catch$area <- catch$iter <- NULL
+# Catches
+catch <- as.data.frame(fishery_catch(catches))
+catch$age <- catch$iter <- NULL
+names(catch)[names(catch) == "unit"] <- "fishery"
+names(catch)[names(catch) == "data"] <- "catch"
+catch$area <- fisheries$area[catch$fishery]
+
+# Length comps
+length.comps <- lenfits(lenfit)
+length.comps$season <- (1 + length.comps$month) / 3
+length.comps$area <- fisheries$area[length.comps$fishery]
+names(length.comps)[names(length.comps) == "sample_size"] <- "ess"
+length.comps <- length.comps[c("year", "season", "fishery", "area",
+                               "ess", "length", "obs", "pred")]
+
+# Weight comps
+weight.comps <- wgtfits(wgtfit)
+weight.comps$season <- (1 + weight.comps$month) / 3
+weight.comps$area <- fisheries$area[weight.comps$fishery]
+names(weight.comps)[names(weight.comps) == "sample_size"] <- "ess"
+weight.comps <- weight.comps[c("year", "season", "fishery", "area",
+                               "ess", "weight", "obs", "pred")]
+
+# Biology
+laa <- as.data.frame(mean_laa(rep))
+names(laa)[names(laa) == "data"] <- "length"
+waa <- as.data.frame(mean_waa(rep))
+names(waa)[names(waa) == "data"] <- "weight"
+biology <- cbind(laa, waa["weight"])
+biology$year <- biology$unit <- biology$area <- biology$iter <- NULL
+biology$age <- biology$age * 4 + as.integer(biology$season)
+biology$season <- NULL
+biology <- biology[order(biology$age),]
+biology$maturity <- mat(par)
+biology$natmort <- m_at_age(rep)
+rownames(biology) <- NULL
