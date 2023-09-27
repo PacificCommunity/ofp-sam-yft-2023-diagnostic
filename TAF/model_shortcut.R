@@ -8,7 +8,7 @@ library(TAF)
 
 mkdir("model")
 
-# Fetch model results
+# Model results
 cp("boot/data/model_results/00.par",           "model")
 cp("boot/data/model_results/11.par",           "model")
 cp("boot/data/model_results/catch.rep",        "model")
