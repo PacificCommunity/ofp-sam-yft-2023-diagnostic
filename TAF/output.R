@@ -87,22 +87,26 @@ fatage <- as.data.frame(fm(rep))
 names(fatage)[names(fatage) == "data"] <- "f"
 fatage <- fatage[c("year", "season", "area", "age", "f")]
 
-# Population
+# Numbers at age
 natage <- as.data.frame(popN(rep))
 natage$unit <- natage$iter <- NULL
 names(natage)[names(natage) == "data"] <- "n"
-natage$n <- natage$n / 1e3
 natage <- natage[c("year", "season", "area", "age", "n")]
 
 # Spawning potential
 biomass <- as.data.frame(adultBiomass(rep))
 biomass$age <- biomass$unit <- biomass$iter <- NULL
 names(biomass)[names(biomass) == "data"] <- "ssb"
-biomass$ssb <- biomass$ssb / 1e3
 
-# Depletion
-depletion <- flr2taf(SBSBF0(rep))
-names(depletion) <- c("year", "dep")
+# Annual summary
+sb <- as.data.frame(SB(rep))
+sbf0 <- as.data.frame(SBF0(rep))
+dep <- as.data.frame(SBSBF0(rep))
+y <- aggregate(data~year, as.data.frame(total_catch(catches)), sum)
+rec <- aggregate(data~year, as.data.frame(popN(rep)), sum, subset=age==1)
+summary <- data.frame(year=sb$year, sb=sb$data, sbf0=sbf0$data, dep=dep$data,
+                      catch=y$data, rec=rec$data)
+fmort
 
 # CPUE
 obs <- as.data.frame(cpue_obs(rep))
