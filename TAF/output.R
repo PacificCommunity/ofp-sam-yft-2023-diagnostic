@@ -13,9 +13,8 @@ source("utilities.R")  # reading
 mkdir("output")
 
 # Read MFCL output files
+par <- reading("parameters", read.MFCLPar(finalPar("model")))
 rep <- reading("model estimates", read.MFCLRep(finalRep("model")))
-par <- reading("parameters", read.MFCLPar(finalPar("model"),
-                                          first.yr=range(rep)[["minyear"]]))
 catches <- reading("catches", read.MFCLCatch("model/catch.rep",
                                              dimensions(par), range(par)))
 lenfit <- reading("length fits", read.MFCLLenFit("model/length.fit"))
