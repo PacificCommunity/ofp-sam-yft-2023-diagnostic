@@ -29,7 +29,6 @@ otoliths <- otoliths[rep(seq_len(nrow(otoliths)), otoliths$obs),]
 otoliths$season <- (1 + otoliths$month) / 3
 otoliths$area <- fisheries$area[otoliths$fishery]
 otoliths <- otoliths[c("year", "season", "area", "age", "length")]
-rownames(otoliths) <- NULL
 
 # CPUE data
 cpue <- realisations(frq)
@@ -38,7 +37,6 @@ cpue$season <- (1 + cpue$month) / 3
 cpue$area <- cpue$fishery - 32
 cpue$index <- cpue$catch / cpue$effort / 1e6
 cpue <- cpue[c("year", "season", "area", "index")]
-rownames(cpue) <- NULL
 
 # Size data
 size <- freq(frq)
@@ -47,15 +45,13 @@ size <- size[size$freq != -1,]
 # Length compositions
 length.comps <- size[!is.na(size$length),]
 length.comps$season <- (1 + length.comps$month) / 3
-length.comps$area <- fisheries$area[length.comps$fishery]
-length.comps <- length.comps[c("year", "season", "fishery", "area", "length", "freq")]
+length.comps <- length.comps[c("year", "season", "fishery", "length", "freq")]
 row.names(length.comps) <- NULL
 
 # Weight compositions
 weight.comps <- size[!is.na(size$weight),]
 weight.comps$season <- (1 + weight.comps$month) / 3
-weight.comps$area <- fisheries$area[weight.comps$fishery]
-weight.comps <- weight.comps[c("year", "season", "fishery", "area", "weight", "freq")]
+weight.comps <- weight.comps[c("year", "season", "fishery", "weight", "freq")]
 row.names(weight.comps) <- NULL
 
 # Write TAF tables
