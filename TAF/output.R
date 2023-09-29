@@ -2,9 +2,9 @@
 
 ## Before: 00.par, 11.par, catch.rep, length.fit, plot-11.par.rep,
 ##         test_plot_output, weight.fit (model), fisheries.csv (data)
-## After:  biology.csv, biomass.csv, catch.csv, cpue.csv, depletion.csv,
-##         fatage.csv, length.comps.csv, likelihoods.csv, natage.csv,
-##         selectivity.csv, stats.csv, weight.comps.csv (output)
+## After:  biology.csv, biomass.csv, catch.csv, cpue.csv, fatage.csv,
+##         length.comps.csv, likelihoods.csv, natage.csv, selectivity.csv,
+##         stats.csv, weight.comps.csv (output)
 
 library(TAF)
 taf.library(FLR4MFCL)
@@ -99,14 +99,14 @@ biomass$age <- biomass$unit <- biomass$iter <- NULL
 names(biomass)[names(biomass) == "data"] <- "ssb"
 
 # Annual summary
+rec <- aggregate(data~year, as.data.frame(popN(rep)), sum, subset=age==1)
+y <- as.data.frame(seasonSums(total_catch(catches)))
 sb <- as.data.frame(SB(rep))
 sbf0 <- as.data.frame(SBF0(rep))
 dep <- as.data.frame(SBSBF0(rep))
-y <- aggregate(data~year, as.data.frame(total_catch(catches)), sum)
-rec <- aggregate(data~year, as.data.frame(popN(rep)), sum, subset=age==1)
-summary <- data.frame(year=sb$year, sb=sb$data, sbf0=sbf0$data, dep=dep$data,
-                      catch=y$data, rec=rec$data)
-fmort
+f <- as.data.frame(seasonSums(AggregateF(rep)))
+summary <- data.frame(year=sb$year, rec=rec$data, catch=y$data, sb=sb$data,
+                      sbf0=sbf0$data, dep=dep$data, f=f$data)
 
 # CPUE
 obs <- as.data.frame(cpue_obs(rep))
@@ -119,15 +119,15 @@ cpue$area <- as.integer(cpue$unit) - 32
 cpue$age <- cpue$unit <- cpue$iter <- NULL
 
 # Write TAF tables
-write.taf(likelihoods, dir="output")
-write.taf(stats, dir="output")
-write.taf(catch, dir="output")
-write.taf(length.comps, dir="output")
-write.taf(weight.comps, dir="output")
 write.taf(biology, dir="output")
-write.taf(selectivity, dir="output")
-write.taf(fatage, dir="output")
-write.taf(natage, dir="output")
 write.taf(biomass, dir="output")
-write.taf(depletion, dir="output")
+write.taf(catch, dir="output")
 write.taf(cpue, dir="output")
+write.taf(fatage, dir="output")
+write.taf(length.comps, dir="output")
+write.taf(likelihoods, dir="output")
+write.taf(natage, dir="output")
+write.taf(selectivity, dir="output")
+write.taf(stats, dir="output")
+write.taf(summary, dir="output")
+write.taf(weight.comps, dir="output")
