@@ -116,6 +116,8 @@ names(pred)[names(pred) == "data"] <- "pred"
 cpue <- cbind(obs, pred["pred"])
 cpue <- cpue[cpue$unit %in% 33:37,]
 cpue$area <- as.integer(cpue$unit) - 32
+cpue$obs <- exp(cpue$obs)
+cpue$pred <- exp(cpue$pred)
 cpue$age <- cpue$unit <- cpue$iter <- NULL
 
 # Write TAF tables
