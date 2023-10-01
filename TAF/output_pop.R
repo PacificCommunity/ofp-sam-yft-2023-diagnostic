@@ -89,12 +89,13 @@ selectivity <- selectivity[c("fishery", "age", "sel")]
 # Summary
 rec <- aggregate(data~year, as.data.frame(popN(rep)), sum, subset=age==1)
 y <- as.data.frame(seasonSums(total_catch(catches)))
+tb <- aggregate(data~year, as.data.frame(seasonMeans(totalBiomass(rep))), sum)
 sb <- as.data.frame(SB(rep))
 sbf0 <- as.data.frame(SBF0(rep))
 dep <- as.data.frame(SBSBF0(rep))
 f <- as.data.frame(seasonSums(AggregateF(rep)))
-summary <- data.frame(year=sb$year, rec=rec$data, catch=y$data, sb=sb$data,
-                      sbf0=sbf0$data, dep=dep$data, f=f$data)
+summary <- data.frame(year=sb$year, rec=rec$data, catch=y$data, tb=tb$data,
+                      sb=sb$data, sbf0=sbf0$data, dep=dep$data, f=f$data)
 
 # Write TAF tables
 write.taf(biology, dir="output")
