@@ -23,27 +23,31 @@ summary <- rnd(summary, 2:8, c(0, 0, 0, 0, 0, 2, 2))
 
 # Plot adult and juvenile F
 taf.png("f_adult_juvenile_same_axes", width=2000, height=1600, res=250)
-print(xyplot(f~year|area, groups=stage, f.stage, type=c("l","g"), as.table=TRUE,
-             col=1, lty=1:2, lwd=2, xlab="Year", ylab="Fishing mortality"))
+p <- xyplot(f~year|area, groups=stage, f.stage, type="l", as.table=TRUE, col=1,
+            lty=1:2, lwd=2, xlab="Year", ylab="Fishing mortality", grid=TRUE)
+plot(p)
 dev.off()
 taf.png("f_adult_juvenile_free_axes", width=2000, height=1600, res=250)
-print(xyplot(f~year|area, groups=stage, f.stage, type=c("l","g"), as.table=TRUE,
-             col=1, lty=1:2, lwd=2, xlab="Year", ylab="Fishing mortality",
-             scales="free"))
+p <- xyplot(f~year|area, groups=stage, f.stage, type="l", as.table=TRUE, col=1,
+            lty=1:2, lwd=2, xlab="Year", ylab="Fishing mortality",
+            scales="free", grid=TRUE)
+plot(p)
 dev.off()
 
 # Plot fishing mortality for the last ten years
 taf.png("f_last_10_same_axes", width=2000, height=1600, res=250)
 f.last.10 <- f.annual[f.annual$year %in% tail(sort(unique(f.annual$year)), 10),]
 f.last.10 <- aggregate(f~age+area, f.last.10, mean)
-print(xyplot(f~age|area, f.last.10, as.table=TRUE, type="l", lwd=2, xlab="Year",
-             ylab="Fishing mortality"))
+p <- xyplot(f~age|area, f.last.10, as.table=TRUE, type="l", lwd=2, xlab="Year",
+            ylab="Fishing mortality", grid=TRUE)
+plot(p)
 dev.off()
 taf.png("f_last_10_free_axes", width=2000, height=1600, res=250)
 f.last.10 <- f.annual[f.annual$year %in% tail(sort(unique(f.annual$year)), 10),]
 f.last.10 <- aggregate(f~age+area, f.last.10, mean)
-print(xyplot(f~age|area, f.last.10, as.table=TRUE, type="l", lwd=2,
-             scale="free", xlab="Year", ylab="Fishing mortality"))
+p <- xyplot(f~age|area, f.last.10, as.table=TRUE, type="l", lwd=2, scale="free",
+            xlab="Year", ylab="Fishing mortality", grid=TRUE)
+plot(p)
 dev.off()
 
 # Write TAF tables
