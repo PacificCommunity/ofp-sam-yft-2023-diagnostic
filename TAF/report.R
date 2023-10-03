@@ -6,6 +6,7 @@
 ##         f_last_10_same_axes, summary.csv (report)
 
 library(TAF)
+library(lattice)
 
 mkdir("report")
 
