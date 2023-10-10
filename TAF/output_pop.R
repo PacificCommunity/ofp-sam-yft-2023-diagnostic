@@ -62,7 +62,8 @@ f.annual$unit <- f.annual$season <- f.annual$iter <- NULL
 
 # Fishing mortality: adult and juvenile
 p.adult <- mat(par)
-p.juven <-  1- p.adult
+p.adult[which.max(p.adult):length(p.adult)] <- 1  # once adult, stay adult
+p.juven <-  1 - p.adult
 f.adult <- aggregate(f~year+area, f.annual, weighted.mean, w=p.adult)
 f.juven <- aggregate(f~year+area, f.annual, weighted.mean, w=p.juven)
 f.adult$stage <- "adult"
