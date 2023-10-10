@@ -22,33 +22,39 @@ summary <- div(summary, 2:6, 10^c(6,3,3,3,3))
 summary <- rnd(summary, 2:8, c(0, 0, 0, 0, 0, 2, 2))
 
 # Plot adult and juvenile F
-taf.png("f_adult_juvenile_same_axes", width=2400, height=1200, res=250)
-p <- xyplot(f~year|area, groups=stage, f.stage, type="l", as.table=TRUE, col=1,
-            lty=1:2, lwd=2, xlab="Year", ylab="Fishing mortality", grid=TRUE)
+taf.png("f_adult_juvenile_same_axes", width=2200, height=1400, res=300)
+p <- xyplot(f~year|area, groups=stage, f.stage, type="l", col=1, lty=1:2, lwd=2,
+            grid=TRUE, xlab="Year", ylab="Fishing mortality", layout=c(2,3),
+            as.table=TRUE, scales=list(alternating=FALSE))
 plot(p)
 dev.off()
 
-taf.png("f_adult_juvenile_free_axes", width=2400, height=1200, res=250)
-p <- xyplot(f~year|area, groups=stage, f.stage, type="l", as.table=TRUE, col=1,
-            lty=1:2, lwd=2, xlab="Year", ylab="Fishing mortality",
-            scales="free", grid=TRUE)
+taf.png("f_adult_juvenile_free_axes", width=2200, height=1400, res=300)
+p <- xyplot(f~year|area, groups=stage, f.stage, type="l", col=1, lty=1:2, lwd=2,
+            grid=TRUE, xlab="Year", ylab="Fishing mortality", layout=c(2,3),
+            as.table=TRUE,
+            scales=list(y=list(relation="free"), alternating=FALSE, rot=0),
+            between=list(x=0.6))
 plot(p)
 dev.off()
 
-# Plot fishing mortality for the last ten years
-taf.png("f_last_10_same_axes", width=2400, height=1200, res=250)
+# Plot fishing mortality by age for the last ten years
+taf.png("f_last_10_same_axes", width=2200, height=1400, res=300)
 f.last.10 <- f.annual[f.annual$year %in% tail(sort(unique(f.annual$year)), 10),]
 f.last.10 <- aggregate(f~age+area, f.last.10, mean)
-p <- xyplot(f~age|area, f.last.10, as.table=TRUE, type="l", lwd=2, xlab="Year",
-            ylab="Fishing mortality", grid=TRUE)
+p <- xyplot(f~age|area, f.last.10, type="l", lwd=2, grid=TRUE, xlab="Age class",
+            ylab="Fishing mortality", layout=c(2,3), as.table=TRUE,
+            scales=list(alternating=FALSE))
 plot(p)
 dev.off()
 
-taf.png("f_last_10_free_axes", width=2400, height=1200, res=250)
+taf.png("f_last_10_free_axes", width=2200, height=1400, res=300)
 f.last.10 <- f.annual[f.annual$year %in% tail(sort(unique(f.annual$year)), 10),]
 f.last.10 <- aggregate(f~age+area, f.last.10, mean)
-p <- xyplot(f~age|area, f.last.10, as.table=TRUE, type="l", lwd=2, scale="free",
-            xlab="Year", ylab="Fishing mortality", grid=TRUE)
+p <- xyplot(f~age|area, f.last.10, layout=c(2,3), as.table=TRUE, type="l",
+            lwd=2, grid=TRUE, xlab="Age class", ylab="Fishing mortality",
+            scales=list(y=list(relation="free"), alternating=FALSE, rot=0),
+            between=list(x=0.6))
 plot(p)
 dev.off()
 
