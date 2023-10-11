@@ -42,5 +42,5 @@ such as:
 - Virtual machine, e.g. VirtualBox or VMware
 - Online services that provide Linux machines
 
-The `mfclo64` executable was compiled on Ubuntu 20.04 using static linking, so
+The `mfclo64` executable was compiled on Ubuntu 20.04 using *static linking*, so
 it should run on almost any Linux machine.
