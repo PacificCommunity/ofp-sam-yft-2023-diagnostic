@@ -20,6 +20,8 @@ f.annual <- read.taf("output/f_annual.csv")
 biology <- rnd(biology, 2:5, c(1,1,3,3))
 summary <- div(summary, 2:6, 10^c(6,3,3,3,3))
 summary <- rnd(summary, 2:8, c(0, 0, 0, 0, 0, 2, 2))
+biology <- format(biology)  # retain trailing zeros
+summary <- format(summary)  # retain trailing zeros
 
 # Plot adult and juvenile F
 taf.png("f_adult_juvenile_same_axes", width=2200, height=1400, res=300)
