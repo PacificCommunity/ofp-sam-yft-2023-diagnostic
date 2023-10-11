@@ -44,3 +44,61 @@ such as:
 
 The `mfclo64` executable was compiled on Ubuntu 20.04 using *static linking*, so
 it should run on almost any Linux machine.
+
+### Run in a Linux terminal
+
+Navigate to the MFCL folder and run:
+
+```
+./doitall.sh
+```
+
+Alternatively, copy the required files into a new folder,
+
+```
+doitall.sh
+mfcl.cfg
+mfclo64
+yft.age_length
+yft.frq
+yft.ini
+yft.tag
+```
+
+and then run the model:
+
+```
+./doitall.sh
+```
+
+### Run in TAF format
+
+First install the FLCore package, if it's not already installed.
+
+On a Linux machine, the full MFCL model run can be completed as a TAF analysis.
+Start R, make sure the TAF folder is the working directory, and then run:
+
+```
+library(TAF)
+taf.boot()
+source.taf("data.R")
+source.taf("model.R")
+source.taf("output.R")
+source.taf("report.R")
+```
+
+A shortcut script is provided, to run the TAF analysis in 1 minute rather than
+10 hours:
+
+```
+library(TAF)
+taf.boot()
+source.taf("data.R")
+source.taf("model_shortcut.R")
+source.taf("output.R")
+source.taf("report.R")
+```
+
+The TAF shortcut analysis runs an all platforms: Windows, Linux, and macOS. It
+extracts the data and output from the MFCL files and makes them available as CSV
+files that can be examined.
