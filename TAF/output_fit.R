@@ -14,8 +14,8 @@ mkdir("output")
 # Read MFCL output files
 par <- reading("parameters", read.MFCLPar(finalPar("model")))
 rep <- reading("model estimates", read.MFCLRep(finalRep("model")))
-lenfit <- reading("length fits", read.MFCLLenFit("model/length.fit"))
 like <- reading("likelihoods", read.MFCLLikelihood("model/test_plot_output"))
+lenfit <- reading("length fits", read.MFCLLenFit("model/length.fit"))
 wgtfit <- reading("weight fits", read.MFCLWgtFit("model/weight.fit"))
 
 # Model stats
