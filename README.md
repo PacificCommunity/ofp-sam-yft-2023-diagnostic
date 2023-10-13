@@ -16,9 +16,9 @@ Download YFT 2023 diagnostic model:
 
 Download YFT 2023 grid results:
 
-- The **yft-2023-grid [release
-  page](https://github.com/PacificCommunity/ofp-sam-yft-2023-grid/releases)**
-  includes a
+- The
+  **[yft-2023-grid/releases](https://github.com/PacificCommunity/ofp-sam-yft-2023-grid/releases)**
+  page includes a
   **[yft-2023-grid-results.zip](https://github.com/PacificCommunity/ofp-sam-yft-2023-grid/releases/download/file/yft-2023-grid-results.zip)**
   file
 
