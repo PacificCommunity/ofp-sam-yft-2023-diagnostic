@@ -1,10 +1,26 @@
 # YFT 2023 Diagnostic Model
 
-Download report:
+Download YFT 2023 assessment report:
 
 - **Stock assessment of yellowfin tuna in the western and central Pacific Ocean:
   2023**\
   **[WCPFC-SC19-2023/SA-WP-04](https://meetings.wcpfc.int/node/19352)**
+
+Download YFT 2023 diagnostic model:
+
+- Clone the
+  **[yft-2023-diagnostic](https://github.com/PacificCommunity/ofp-sam-yft-2023-diagnostic)**
+  repository or download as
+  **[main.zip](https://github.com/PacificCommunity/ofp-sam-yft-2023-diagnostic/archive/refs/heads/main.zip)**
+  file
+
+Download YFT 2023 grid results:
+
+- The **yft-2023-grid [release
+  page](https://github.com/PacificCommunity/ofp-sam-yft-2023-grid/releases)**
+  includes a
+  **[yft-2023-grid-results.zip](https://github.com/PacificCommunity/ofp-sam-yft-2023-grid/releases/download/file/yft-2023-grid-results.zip)**
+  file
 
 ## Reference model
 
