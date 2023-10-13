@@ -6,10 +6,6 @@ Download report:
   2023**\
   **[WCPFC-SC19-2023/SA-WP-04](https://meetings.wcpfc.int/node/19352)**
 
-- **Stock assessment of yellowfin tuna in the\
-  western and central Pacific Ocean: 2023**\
-  **[WCPFC-SC19-2023/SA-WP-04](https://meetings.wcpfc.int/node/19352)**
-
 ## Reference model
 
 In SPC assessment jargon, the *diagnostic model* is the reference model that is
@@ -30,7 +26,7 @@ stock assessor a good starting point that is organized and documented.
 The **[MFCL](MFCL)** folder includes all the MFCL input files, model settings, and
 output files.
 
-The **[R](R)** folder elaborates on the relationship between three closely
+The **R** folder elaborates on the relationship between three closely
 related model runs: the diagnostic model (not jittered, runs from an ini file),
 the jittered model (runs from a par file), and the m2_s20_a075_h80 grid member
 (double jittered). The target audience is the YFT 2026 stock assessor.
@@ -38,9 +34,9 @@ the jittered model (runs from a par file), and the m2_s20_a075_h80 grid member
 The **TAF** folder extracts the data and results from MFCL format to CSV format
 that can be examined using Excel, R, or other statistical software.
 [TAF](https://cran.r-project.org/package=TAF) is a standard reproducible format
-for stock assessments that is practical for making the MFCL [data](TAF/data) and
-[output](TAF/output) available in a format that is easy to examine. The
-[report](TAF/report) folder contains formatted tables and example plots.
+for stock assessments that is practical for making the MFCL **[data](TAF/data)**
+and **[output](TAF/output)** available in a format that is easy to examine. The
+**[report](TAF/report)** folder contains formatted tables and example plots.
 
 ## Run the assessment model
 
