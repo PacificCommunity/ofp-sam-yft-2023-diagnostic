@@ -17,7 +17,7 @@ includes specific factor levels (for steepness, likelihood weights, etc.) the
 diagnostic model has intermediate levels, while other grid members explore
 higher and lower levels.
 
-Finally, the diagnostic model is also the starting point for YFT 2026 stock
+Finally, the diagnostic model is also the starting point for the YFT 2026 stock
 assessment model development. One purpose of this repository is to give the
 stock assessor a good starting point that is organized and documented.
 
@@ -43,7 +43,7 @@ and **[output](TAF/output)** available in a format that is easy to examine. The
 The YFT 2023 model takes around 10 hours to run. It requires a Linux platform,
 such as:
 
-- Plain Linux machine, e.g. personal laptop
+- Plain Linux machine, e.g. a personal laptop
 - Windows Subsystem for Linux, optional feature in Windows
 - Virtual machine, e.g. VirtualBox or VMware
 - Online services that provide Linux machines
@@ -77,11 +77,28 @@ and then run the model:
 ./doitall.sh
 ```
 
+### Run on Condor
+
+SPC staff run most assessment models on a Condor cluster of Linux machines:
+
+```
+library(condor)
+session <- ssh_connect("CONDOR_SUBMITTER_MACHINE")
+condor_submit()
+```
+
 ### Run in TAF format
 
-First install the FLCore package, if it's not already installed.
+Anyone can run the assessment analysis in TAF format. First install TAF, FLCore,
+and FLR4MFCL, if they are not already installed:
 
-On a Linux machine, the full MFCL model run can be completed as a TAF analysis.
+```
+install.packages("TAF")
+install_github("flr/FLCore")
+install_github("PacificCommunity/FLR4MFCL")
+```
+
+On a Linux machine, the full assessment model can be run as a TAF analysis.
 Start R, make sure the TAF folder is the working directory, and then run:
 
 ```
@@ -107,4 +124,4 @@ source.taf("report.R")
 
 The TAF shortcut analysis runs an all platforms: Windows, Linux, and macOS. It
 extracts the data and output from the MFCL files and makes them available as CSV
-files that can be examined.
+files that can be examined and analyzed further.
