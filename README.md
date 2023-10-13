@@ -1,5 +1,15 @@
 # YFT 2023 Diagnostic Model
 
+Download report:
+
+- **Stock assessment of yellowfin tuna in the western and central Pacific Ocean:
+  2023**\
+  **[WCPFC-SC19-2023/SA-WP-04](https://meetings.wcpfc.int/node/19352)**
+
+- **Stock assessment of yellowfin tuna in the\
+  western and central Pacific Ocean: 2023**\
+  **[WCPFC-SC19-2023/SA-WP-04](https://meetings.wcpfc.int/node/19352)**
+
 ## Reference model
 
 In SPC assessment jargon, the *diagnostic model* is the reference model that is
