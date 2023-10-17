@@ -46,13 +46,11 @@ size <- size[size$freq != -1,]
 length.comps <- size[!is.na(size$length),]
 length.comps$season <- (1 + length.comps$month) / 3
 length.comps <- length.comps[c("year", "season", "fishery", "length", "freq")]
-row.names(length.comps) <- NULL
 
 # Weight compositions
 weight.comps <- size[!is.na(size$weight),]
 weight.comps$season <- (1 + weight.comps$month) / 3
 weight.comps <- weight.comps[c("year", "season", "fishery", "weight", "freq")]
-row.names(weight.comps) <- NULL
 
 # Write TAF tables
 write.taf(fisheries, dir="data")
