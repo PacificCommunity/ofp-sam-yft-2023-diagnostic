@@ -18,6 +18,7 @@ oto <- reading("otolith data",
 frq <- reading("catch data", read.MFCLFrq("boot/data/yft.frq"))
 fisheries <- reading("fisheries description",
                      read.table("boot/data/fdesc.txt", fill=TRUE, header=TRUE))
+tag <- reading("tagging data", read.MFCLTag("boot/data/yft.tag"))
 
 # Fisheries description
 names(fisheries)[names(fisheries) == "region"] <- "area"
@@ -52,9 +53,28 @@ weight.comps <- size[!is.na(size$weight),]
 weight.comps$season <- (1 + weight.comps$month) / 3
 weight.comps <- weight.comps[c("year", "season", "fishery", "weight", "freq")]
 
+# Tag releases and recaptures
+tag.releases <- releases(tag)
+names(tag.releases)[names(tag.releases) == "region"] <- "area"
+tag.releases$season <- (1 + tag.releases$month) / 3
+tag.releases <- tag.releases[c("rel.group", "area", "year", "season", "program",
+                               "length", "lendist")]
+tag.recaptures <- recaptures(tag)
+names(tag.recaptures)[names(tag.recaptures) == "region"] <- "rel.area"
+names(tag.recaptures)[names(tag.recaptures) == "year"] <- "rel.year"
+names(tag.recaptures)[names(tag.recaptures) == "month"] <- "rel.month"
+names(tag.recaptures) <- sub("recap", "rec", names(tag.recaptures))
+tag.recaptures$rel.season <- (1 + tag.recaptures$rel.month) / 3
+tag.recaptures$rec.season <- (1 + tag.recaptures$rec.month) / 3
+tag.recaptures <- tag.recaptures[
+  c("rel.group", "rel.area", "rel.year", "rel.season", "program", "rel.length",
+    "rec.fishery", "rec.year", "rec.season", "rec.number")]
+
 # Write TAF tables
 write.taf(fisheries, dir="data")
 write.taf(otoliths, dir="data")
 write.taf(cpue, dir="data")
 write.taf(length.comps, dir="data")
 write.taf(weight.comps, dir="data")
+write.taf(tag.releases, dir="data")
+write.taf(tag.recaptures, dir="data")
