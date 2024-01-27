@@ -3,7 +3,7 @@
 ## Before: fdesc.txt, yft.age_length, yft.frq, yft.tag (boot/data),
 ##         length.fit (boot/model_results)
 ## After:  cpue.csv, fisheries.csv, length_comps.csv, otoliths.csv,
-##         weight_comps.csv (data)
+##         tag_recaptures.csv, tag_releases.csv, weight_comps.csv (data)
 
 library(TAF)
 taf.library(FLR4MFCL)
