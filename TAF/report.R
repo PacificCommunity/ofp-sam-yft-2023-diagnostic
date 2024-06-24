@@ -15,6 +15,7 @@ biology <- read.taf("output/biology.csv")
 summary <- read.taf("output/summary.csv")
 f.stage <- read.taf("output/f_stage.csv")
 f.annual <- read.taf("output/f_annual.csv")
+length.comps <- read.taf("output/length_comps.csv")
 
 # Format tables
 biology <- rnd(biology, 2:5, c(1,1,3,3))
@@ -22,6 +23,11 @@ summary <- div(summary, 2:6, 10^c(6,3,3,3,3))
 summary <- rnd(summary, 2:8, c(0, 0, 0, 0, 0, 2, 2))
 biology <- format(biology)  # retain trailing zeros
 summary <- format(summary)  # retain trailing zeros
+
+# Calculate length comp samples
+fish <- 22
+length.comps$samples <- length.comps$obs * length.comps$ess
+lf <- aggregate(samples~length, length.comps, sum, subset=fishery==fish)
 
 # Plot adult and juvenile F
 taf.png("f_adult_juvenile_same_axes", width=2200, height=1400, res=300)
@@ -58,6 +64,11 @@ p <- xyplot(f~age|area, f.last.10, type="l", lwd=2, grid=TRUE, xlab="Age class",
             scales=list(y=list(relation="free"), alternating=FALSE, rot=0),
             between=list(x=0.6))
 plot(p)
+dev.off()
+
+# Plot length comp samples
+taf.png("lf")
+barplot(samples~length, lf, main=paste("yft", fish, sep="."))
 dev.off()
 
 # Write TAF tables
