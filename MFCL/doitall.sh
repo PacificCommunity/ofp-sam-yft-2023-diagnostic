@@ -77,8 +77,8 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -36 99 33
   -37 99 33
 # Recruitment and initial population settings
-  1 149 100        # recruitment deviation penalty
-  1 400 6          # final six recruitment deviates set to zero
+  1 149 100  # recruitment deviation penalty
+  1 400 6    # final six recruitment deviates set to zero
 # Fixed terminal recruitments are arithmetic mean of remaining period (not default geometric mean)
   1 398 1
   2 177 1          # use old totpop scaling method
@@ -118,15 +118,15 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -999 43 0  # estimate tag variance if = 1
   -999 44 0  # group all tags for variance estimation if = 1
 # Grouping of fisheries for tag return data
-   -1 32  1
-   -2 32  2
-   -3 32  3
-   -4 32  4
-   -5 32  5
-   -6 32  6
-   -7 32  7
-   -8 32  8
-   -9 32  9
+   -1 32 1
+   -2 32 2
+   -3 32 3
+   -4 32 4
+   -5 32 5
+   -6 32 6
+   -7 32 7
+   -8 32 8
+   -9 32 9
   -10 32 10
   -11 32 11
   -12 32 12
@@ -193,7 +193,7 @@ mfclo64 yft.frq 00.par 01.par -file - <<PHASE1
   -28 24 26
   -32 24 27
   -24 24 28
-  -33 24 29  # Index fisheries
+  -33 24 29  # index fisheries
   -34 24 29
   -35 24 29
   -36 24 29
@@ -257,8 +257,8 @@ PHASE1
 # ---------
 
 mfclo64 yft.frq 01.par 02.par -file - <<PHASE2
- 1 1 1000  # set max. number of function evaluations per phase to 1000
- 2 113 0   # turn off useless parameter rec_init_diff
+  1 1 1000  # set max. number of function evaluations per phase to 1000
+  2 113 0   # turn off useless parameter rec_init_diff
 PHASE2
 
 # ---------
@@ -266,9 +266,9 @@ PHASE2
 # ---------
 
 mfclo64 yft.frq 02.par 03.par -file - <<PHASE3
- 2 70 1   # activate time series of reg recruitment parameters
- 2 71 1   # estimate temporal changes in recruitment distribution
- 2 178 1  # constrain regional recruitments
+  2 70 1   # activate time series of reg recruitment parameters
+  2 71 1   # estimate temporal changes in recruitment distribution
+  2 178 1  # constrain regional recruitments
 PHASE3
 
 # ---------
@@ -276,8 +276,8 @@ PHASE3
 # ---------
 
 mfclo64 yft.frq 03.par 04.par -file - <<PHASE4
- 2 68 1   # estimate movement coefficients
- 2 27 -1  # penalty wt 0.1 computed against prior
+  2 68 1   # estimate movement coefficients
+  2 27 -1  # penalty wt 0.1 computed against prior
 PHASE4
 
 # ---------
@@ -285,11 +285,11 @@ PHASE4
 # ---------
 
 mfclo64 yft.frq 04.par 05.par -file - <<PHASE5
-  -100000 1 1  # estimate
-  -100000 2 1  # time-invariant
-  -100000 3 1  # distribution
-  -100000 4 1  # of
-  -100000 5 1  # recruitment
+  -100000 1 1  # estimate time-invariant distribution of recruitment
+  -100000 2 1
+  -100000 3 1
+  -100000 4 1
+  -100000 5 1
 PHASE5
 
 # ---------
@@ -297,10 +297,10 @@ PHASE5
 # ---------
 
 mfclo64 yft.frq 05.par 06.par -file - <<PHASE6
- 1 240 1  # activate model fit to observed age-length data
- 1 12 0   # do not estimate mean length of age 1
- 1 13 0   # do not estimate mean length of largest age class
- 1 14 0   # do not estimate von Bertalanffy K
+  1 240 1  # activate model fit to observed age-length data
+  1 12 0   # do not estimate mean length of age 1
+  1 13 0   # do not estimate mean length of largest age class
+  1 14 0   # do not estimate von Bertalanffy K
 PHASE6
 
 # ---------
@@ -317,9 +317,9 @@ PHASE7
 # ---------
 
 mfclo64 yft.frq 07.par 08.par -file - <<PHASE8
- 1 173 0  # estimate independent mean lengths for 1st 0 age classes
- 1 182 0
- 1 184 0
+  1 173 0  # estimate independent mean lengths for 1st 0 age classes
+  1 182 0
+  1 184 0
 PHASE8
 
 # ---------
