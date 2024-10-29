@@ -24,23 +24,18 @@ summary <- rnd(summary, 2:8, c(0, 0, 0, 0, 0, 2, 2))
 biology <- format(biology)  # retain trailing zeros
 summary <- format(summary)  # retain trailing zeros
 
-# Calculate length comp samples
-fish <- 22
-length.comps$samples <- length.comps$obs * length.comps$ess
-lf <- aggregate(samples~length, length.comps, sum, subset=fishery==fish)
-
 # Plot adult and juvenile F
 taf.png("f_adult_juvenile_same_axes", width=2200, height=1400, res=300)
-p <- xyplot(f~year|area, groups=stage, f.stage, type="l", col=1, lty=1:2, lwd=2,
-            grid=TRUE, xlab="Year", ylab="Fishing mortality", layout=c(2,3),
-            as.table=TRUE, scales=list(alternating=FALSE))
+p <- xyplot(f~year|area, groups=stage, f.stage, type="l", col=1, lty=c(1,3),
+            lwd=2, grid=TRUE, xlab="Year", ylab="Fishing mortality",
+            layout=c(2,3), as.table=TRUE, scales=list(alternating=FALSE))
 plot(p)
 dev.off()
 
 taf.png("f_adult_juvenile_free_axes", width=2200, height=1400, res=300)
-p <- xyplot(f~year|area, groups=stage, f.stage, type="l", col=1, lty=1:2, lwd=2,
-            grid=TRUE, xlab="Year", ylab="Fishing mortality", layout=c(2,3),
-            as.table=TRUE,
+p <- xyplot(f~year|area, groups=stage, f.stage, type="l", col=1, lty=c(1,3),
+            lwd=2, grid=TRUE, xlab="Year", ylab="Fishing mortality",
+            layout=c(2,3), as.table=TRUE,
             scales=list(y=list(relation="free"), alternating=FALSE, rot=0),
             between=list(x=0.6))
 plot(p)
@@ -64,11 +59,6 @@ p <- xyplot(f~age|area, f.last.10, type="l", lwd=2, grid=TRUE, xlab="Age class",
             scales=list(y=list(relation="free"), alternating=FALSE, rot=0),
             between=list(x=0.6))
 plot(p)
-dev.off()
-
-# Plot length comp samples
-taf.png("lf")
-barplot(samples~length, lf, main=paste("yft", fish, sep="."))
 dev.off()
 
 # Write TAF tables
