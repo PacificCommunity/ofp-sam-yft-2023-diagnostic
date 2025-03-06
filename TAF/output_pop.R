@@ -36,7 +36,7 @@ biology$natmort <- m_at_age(rep)
 # Biomass
 biomass <- as.data.frame(adultBiomass(rep))
 biomass$age <- biomass$unit <- biomass$iter <- NULL
-names(biomass)[names(biomass) == "data"] <- "ssb"
+names(biomass)[names(biomass) == "data"] <- "sb"
 
 # Catch
 catch <- as.data.frame(fishery_catch(catches))
