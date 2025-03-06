@@ -42,9 +42,9 @@ names(biomass)[names(biomass) == "data"] <- "sb"
 catch <- as.data.frame(fishery_catch(catches))
 catch$age <- catch$iter <- NULL
 names(catch)[names(catch) == "unit"] <- "fishery"
-names(catch)[names(catch) == "data"] <- "t"
+names(catch)[names(catch) == "data"] <- "catch"
 catch$area <- fisheries$area[catch$fishery]
-catch <- catch[c("year", "season", "fishery", "area", "t")]
+catch <- catch[c("year", "season", "fishery", "area", "catch")]
 
 # Fishing mortality: season
 f.season.all <- as.data.frame(fm_aggregated(rep))
