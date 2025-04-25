@@ -1,7 +1,7 @@
 ## Extract model fit results, write TAF output tables
 
-## Before: 00.par, 11.par, length.fit, plot-11.par.rep, test_plot_output,
-##         weight.fit (model)
+## Before: fisheries.csv (data), 00.par, 11.par, length.fit, plot-11.par.rep,
+##         test_plot_output, weight.fit (model)
 ## After:  cpue.csv, length.comps.csv, likelihoods.csv, stats.csv,
 ##         weight.comps.csv (output)
 
@@ -17,6 +17,9 @@ rep <- reading("model estimates", read.MFCLRep(finalRep("model")))
 like <- reading("likelihoods", read.MFCLLikelihood("model/test_plot_output"))
 lenfit <- reading("length fits", read.MFCLLenFit("model/length.fit"))
 wgtfit <- reading("weight fits", read.MFCLWgtFit("model/weight.fit"))
+
+# Read fisheries description
+fisheries <- read.taf("data/fisheries.csv")
 
 # Model stats
 npar <- n_pars(par)
@@ -41,11 +44,13 @@ pred <- as.data.frame(cpue_pred(rep))
 names(obs)[names(obs) == "data"] <- "obs"
 names(pred)[names(pred) == "data"] <- "pred"
 cpue <- cbind(obs, pred["pred"])
-cpue <- cpue[cpue$unit %in% 33:37,]
-cpue$area <- as.integer(cpue$unit) - 32
+names(cpue)[names(cpue) == "unit"] <- "fishery"
+cpue <- cpue[cpue$fishery %in% 33:37,]
+cpue$area <- NULL
+cpue <- merge(cpue, fisheries[c("fishery", "area")])
 cpue$obs <- exp(cpue$obs)
 cpue$pred <- exp(cpue$pred)
-cpue$age <- cpue$unit <- cpue$iter <- NULL
+cpue <- cpue[c("year", "season", "fishery", "area", "obs", "pred")]
 
 # Length comps
 length.comps <- lenfits(lenfit)
