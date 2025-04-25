@@ -21,6 +21,7 @@ fisheries <- reading("fisheries description",
 tag <- reading("tagging data", read.MFCLTag("boot/data/yft.tag"))
 
 # Fisheries description
+names(fisheries)[names(fisheries) == "num"] <- "fishery"
 names(fisheries)[names(fisheries) == "region"] <- "area"
 
 # Otolith data
