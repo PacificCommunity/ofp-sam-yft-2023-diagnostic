@@ -45,12 +45,13 @@ names(obs)[names(obs) == "data"] <- "obs"
 names(pred)[names(pred) == "data"] <- "pred"
 cpue <- cbind(obs, pred["pred"])
 names(cpue)[names(cpue) == "unit"] <- "fishery"
-cpue <- cpue[cpue$fishery %in% 33:37,]
 cpue$area <- NULL
-cpue <- merge(cpue, fisheries[c("fishery", "area")])
+cpue <- merge(cpue, fisheries[c("fishery", "area", "flag")])
+cpue <- cpue[cpue$flag == "IDX",]
 cpue$obs <- exp(cpue$obs)
 cpue$pred <- exp(cpue$pred)
 cpue <- cpue[c("year", "season", "fishery", "area", "obs", "pred")]
+cpue <- cpue[order(cpue$fishery, cpue$year, cpue$season),]
 
 # Length comps
 length.comps <- lenfits(lenfit)
