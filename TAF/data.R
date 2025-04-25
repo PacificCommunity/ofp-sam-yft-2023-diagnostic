@@ -36,9 +36,9 @@ otoliths <- otoliths[c("year", "season", "area", "age", "length")]
 cpue <- realisations(frq)
 cpue <- cpue[cpue$fishery %in% 33:37,]  # index fisheries
 cpue$season <- (1 + cpue$month) / 3
-cpue$area <- cpue$fishery - 32
+cpue <- merge(cpue, fisheries[c("fishery", "area")])  # area column
 cpue$index <- cpue$catch / cpue$effort / 1e6
-cpue <- cpue[c("year", "season", "area", "index")]
+cpue <- cpue[c("year", "season", "fishery", "area", "index")]
 
 # Size data
 size <- freq(frq)
