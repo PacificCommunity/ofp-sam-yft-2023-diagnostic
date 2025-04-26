@@ -15,7 +15,6 @@ biology <- read.taf("output/biology.csv")
 summary <- read.taf("output/summary.csv")
 f.stage <- read.taf("output/f_stage.csv")
 f.annual <- read.taf("output/f_annual.csv")
-length.comps <- read.taf("output/length_comps.csv")
 
 # Format tables
 biology <- rnd(biology, 2:5, c(1,1,3,3))
