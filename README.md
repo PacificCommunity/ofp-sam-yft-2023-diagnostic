@@ -38,7 +38,7 @@ The YFT 2023 model takes around 10 hours to run. It requires a Linux platform, s
 - Virtual machine, e.g. VirtualBox or VMware
 - Online services that provide Linux machines
 
-The `mfclo64` executable was compiled on Ubuntu 20.04 using *static linking*, so it should run on almost any Linux machine.
+The `mfclo64` executable was compiled using *static linking*, so it should run on almost any Linux machine.
 
 ### Run in a Linux terminal
 
