@@ -92,7 +92,7 @@ On a Linux machine, the full assessment model can be run as a TAF analysis. Star
 library(TAF)
 taf.boot()
 source.taf("data.R")
-source.taf("model.R")
+source.taf("model_full.R")
 source.taf("output.R")
 source.taf("report.R")
 ```
