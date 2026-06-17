@@ -1,6 +1,7 @@
 ## Prepare plots and tables for report
 
-## Before: biology.csv, f_annual.csv, f_stage.csv, summary.csv (output)
+## Before: cpue.csv (data), biology.csv, biomass.csv, catch.csv, cpue.csv,
+#          f_annual.csv, f_stage.csv, summary.csv (output)
 ## After:  biology.csv, f_adult_juvenile_same_free.png,
 ##         f_adult_juvenile_same_axes.png, f_last_10_free_axes.png,
 ##         f_last_10_same_axes, summary.csv (report)
@@ -12,9 +13,47 @@ mkdir("report")
 
 # Read tables
 biology <- read.taf("output/biology.csv")
-summary <- read.taf("output/summary.csv")
-f.stage <- read.taf("output/f_stage.csv")
+biomass <- read.taf("output/biomass.csv")
+catch <- read.taf("output/catch.csv")
+cpue.data <- read.taf("data/cpue.csv")
+cpue.output <- read.taf("output/cpue.csv")
 f.annual <- read.taf("output/f_annual.csv")
+f.stage <- read.taf("output/f_stage.csv")
+summary <- read.taf("output/summary.csv")
+
+# Plot biomass
+taf.png("biomass")
+sb <- aggregate(sb~year+area, biomass, mean)
+sb$sb <- sb$sb / 1000
+sb$area <- paste("Region", sb$area)
+sb.all <- data.frame(aggregate(sb~year, sb, sum), area="all")
+sb.all <- sb.all[c("year", "area", "sb")]
+# sb <- rbind(sb, sb.all)
+p <- xyplot(sb~year|area, sb, type="l", as.table=TRUE, layout=c(2,3), grid=TRUE,
+            lwd=2, xlab="Year", ylab="Spawning potential (1000 t)",
+            scales=list(alternating=FALSE))
+plot(p)
+dev.off()
+
+# Plot CPUE data
+taf.png("cpue_data")
+cpue.data$area <- paste("Region", cpue.data$area)
+cpue.data$time <- cpue.data$year + cpue.data$season/4 - 1/8
+p <- xyplot(index~time|area, cpue.data, type="l", as.table=TRUE, layout=c(2,3),
+            scales=list(alternating=FALSE), lwd=2, grid=TRUE, xlab="Year",
+            ylab="CPUE index (data)")
+plot(p)
+dev.off()
+
+# Plot CPUE output
+taf.png("cpue_output")
+cpue.output$area <- paste("Region", cpue.output$area)
+cpue.output$time <- cpue.output$year + cpue.output$season/4 - 1/8
+p <- xyplot(obs~time|factor(area), cpue.output, type="l", as.table=TRUE,
+            layout=c(2,3), lwd=2, xlab="Year", grid=TRUE,
+            ylab="CPUE index (output)", scales=list(alternating=FALSE))
+plot(p)
+dev.off()
 
 # Plot adult and juvenile F
 taf.png("f_adult_juvenile_same_axes", width=2200, height=1400, res=300)
