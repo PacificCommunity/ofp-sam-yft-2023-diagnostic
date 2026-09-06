@@ -1,9 +1,9 @@
-## Extract model fit results, write TAF output tables
+# Extract model fit results, write TAF output tables
 
-## Before: fisheries.csv (data), 00.par, 11.par, length.fit, plot-11.par.rep,
-##         test_plot_output, weight.fit (model)
-## After:  cpue.csv, length.comps.csv, likelihoods.csv, stats.csv,
-##         weight.comps.csv (output)
+# Before: fisheries.csv (data), 00.par, 11.par, length.fit, plot-11.par.rep,
+#         test_plot_output, weight.fit (model)
+# After:  cpue.csv, length.comps.csv, likelihoods.csv, stats.csv,
+#         weight.comps.csv (output)
 
 library(TAF)
 taf.library(FLR4MFCL)

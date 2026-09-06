@@ -1,8 +1,8 @@
-## Run analysis, write model results
+# Run analysis, write model results
 
-## Before: model_results (boot/data)
-## After:  00.par, 11.par, catch.rep, length.fit, plot-11.par.rep,
-##         test_plot_output, weight.fit (model)
+# Before: model_results (boot/data)
+# After:  00.par, 11.par, catch.rep, length.fit, plot-11.par.rep,
+#         test_plot_output, weight.fit (model)
 
 library(TAF)
 

@@ -1,9 +1,9 @@
-## Preprocess data, write TAF data tables
+# Preprocess data, write TAF data tables
 
-## Before: fdesc.txt, yft.age_length, yft.frq, yft.tag (boot/data),
-##         length.fit (boot/model_results)
-## After:  cpue.csv, fisheries.csv, length_comps.csv, otoliths.csv,
-##         tag_recaptures.csv, tag_releases.csv, weight_comps.csv (data)
+# Before: fdesc.txt, yft.age_length, yft.frq, yft.tag (boot/data),
+#         length.fit (boot/data/model_results)
+# After:  cpue.csv, fisheries.csv, length_comps.csv, otoliths.csv,
+#         tag_recaptures.csv, tag_releases.csv, weight_comps.csv (data)
 
 library(TAF)
 taf.library(FLR4MFCL)

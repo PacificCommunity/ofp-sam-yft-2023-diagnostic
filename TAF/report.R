@@ -1,10 +1,10 @@
-## Prepare plots and tables for report
+# Prepare plots and tables for report
 
-## Before: cpue.csv (data), biology.csv, biomass.csv, catch.csv, cpue.csv,
-#          f_annual.csv, f_stage.csv, summary.csv (output)
-## After:  biology.csv, f_adult_juvenile_same_free.png,
-##         f_adult_juvenile_same_axes.png, f_last_10_free_axes.png,
-##         f_last_10_same_axes, summary.csv (report)
+# Before: cpue.csv (data), biology.csv, biomass.csv, catch.csv, cpue.csv,
+#         f_annual.csv, f_stage.csv, summary.csv (output)
+# After:  biology.csv, f_adult_juvenile_same_free.png,
+#         f_adult_juvenile_same_axes.png, f_last_10_free_axes.png,
+#         f_last_10_same_axes, summary.csv (report)
 
 library(TAF)
 library(lattice)

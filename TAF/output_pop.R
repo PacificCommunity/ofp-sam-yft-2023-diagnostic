@@ -1,9 +1,9 @@
-## Extract population results, write TAF output tables
+# Extract population results, write TAF output tables
 
-## Before: 11.par, catch.rep, plot-11.par.rep, (model), fisheries.csv (data)
-## After:  biology.csv, biomass.csv, catch.csv, f_aggregate.csv, f_annual.csv,
-##         f_season.csv, f_stage.csv, natage.csv, selectivity.csv,
-##         summary.csv (output)
+# Before: 11.par, catch.rep, plot-11.par.rep, (model), fisheries.csv (data)
+# After:  biology.csv, biomass.csv, catch.csv, f_aggregate.csv, f_annual.csv,
+#         f_season.csv, f_stage.csv, natage.csv, selectivity.csv,
+#         summary.csv (output)
 
 library(TAF)
 taf.library(FLR4MFCL)

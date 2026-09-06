@@ -1,8 +1,9 @@
-## Run analysis, write model results
+# Run analysis, write model results
 
-## Before: doitall.sh, mfcl.cfg, yft.age_length, yft.frq, yft.ini,
-##         yft.tag (boot/data), mfclo64 (boot/software)
-## After:
+# Before: doitall.sh, mfcl.cfg, yft.age_length, yft.frq, yft.ini,
+#         yft.tag (boot/data), mfclo64 (boot/software)
+# After:  00.par, 11.par, catch.rep, length.fit, plot-11.par.rep,
+#         test_plot_output, weight.fit (model)
 
 library(TAF)
 
